@@ -37,6 +37,11 @@ Lub otwórz lokalnie plik `index.html` w swojej przeglądarce.
 - **Micro-animations**: Heartbeat animation for a premium feel.
 - **Customizable**: Customize the brand name and site name with ease.
 
+## 👤 Author
+
+**Wowk Digital**
+- GitHub: [@WowkDigital](https://github.com/WowkDigital)
+
 ## 📦 Local Installation
 
 If you prefer to include it locally:

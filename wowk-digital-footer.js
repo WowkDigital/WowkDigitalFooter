@@ -138,7 +138,7 @@ const WowkDigitalFooter = (() => {
             siteName = 'Sivis Drive',
             container = 'body',
             brandName = 'Wowk Digital',
-            brandUrl = 'https://wowk.digital'
+            brandUrl = 'https://github.com/WowkDigital'
         } = options;
 
         injectStyles();
