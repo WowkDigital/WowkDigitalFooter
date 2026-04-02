@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wowk Footer | Library Showcase</title>
+    <!-- Importing a premium font for the demo -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0c0e12;
+            --text-color: #f1f5f9;
+            --accent-color: #6366f1;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 80px 20px;
+            background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.1), transparent 40%),
+                        radial-gradient(circle at bottom left, rgba(239, 68, 68, 0.05), transparent 30%);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -0.05em;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #94a3b8;
+            max-width: 600px;
+            line-height: 1.6;
+            margin: 24px 0 40px;
+            font-weight: 300;
+        }
+
+        .badge {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .code-box {
+            background: #000;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 24px;
+            width: 100%;
+            max-width: 500px;
+            text-align: left;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .code-box::before {
+            content: 'Example Usage';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--accent-color);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        code {
+            color: #818cf8;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .code-comment { color: #4b5563; }
+        .code-key { color: #f472b6; }
+        .code-val { color: #34d399; }
+
+        /* Light mode overrides */
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg-color: #f8fafc;
+                --text-color: #0f172a;
+                --glass-bg: rgba(0, 0, 0, 0.02);
+                --glass-border: rgba(0, 0, 0, 0.08);
+            }
+            .hero h1 {
+                background: linear-gradient(135deg, #0f172a 0%, #475569 100%);
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .code-box {
+                background: #fff;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <div class="badge">Wowk Footer v1.0.0</div>
+        <h1>Elegant, Micro-animated Footers</h1>
+        <p>A minimalist, drop-in footer solution for Wowk Digital projects. Effortlessly beautiful across all your applications.</p>
+
+        <div class="code-box">
+            <code>
+                <span class="code-comment">// Simply include and run</span><br>
+                WowkDigitalFooter.<span class="code-key">init</span>({<br>
+                &nbsp;&nbsp;siteName: <span class="code-val">'Library Demo Site'</span>,<br>
+                &nbsp;&nbsp;container: <span class="code-val">'body'</span>,<br>
+                &nbsp;&nbsp;brandName: <span class="code-val">'Wowk Digital'</span><br>
+                });
+            </code>
+        </div>
+    </section>
+
+    <!-- The actual script and initialization -->
+    <script src="wowk-digital-footer.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            WowkDigitalFooter.init({
+                siteName: 'Library Demo Site',
+                container: 'body',
+                brandName: 'Wowk Digital'
+            });
+        });
+    </script>
+</body>
+</html>
