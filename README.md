@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     WowkDigitalFooter.init({
         siteName: 'Twoja Nazwa Strony', // np: 'Sivis Drive'
         container: 'body',           // Opcjonalnie: gdzie osadzić footer (domyślnie body)
-        brandName: 'Wowk Digital'    // Opcjonalnie
+        brandName: 'Wowk Digital',   // Opcjonalnie
+        brandUrl: 'https://github.com/WowkDigital' // Link do profilu GitHub
     });
 });
 ```

@@ -7,7 +7,8 @@
  * <script>
  *   WowkDigitalFooter.init({
  *     siteName: 'Sivis Drive',
- *     container: 'body' 
+ *     container: 'body',
+ *     brandUrl: 'https://github.com/WowkDigital'
  *   });
  * </script>
  */

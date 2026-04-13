@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Premium footer library for Wowk Digital projects.",
   "main": "wowk-digital-footer.js",
+  "homepage": "https://github.com/WowkDigital",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
