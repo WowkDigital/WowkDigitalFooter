@@ -20,7 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
         siteName: 'Twoja Nazwa Strony', // np: 'Sivis Drive'
         container: 'body',           // Opcjonalnie: gdzie osadzić footer (domyślnie body)
         brandName: 'Wowk Digital',   // Opcjonalnie
-        brandUrl: 'https://github.com/WowkDigital' // Link do profilu GitHub
+        brandUrl: 'https://github.com/WowkDigital', // Link do profilu GitHub
+        showHubLink: true,           // Opcjonalnie: czy pokazać link do WD_HUB (domyślnie true)
+        hubUrl: 'https://wowkdigital.github.io/WD_HUB/' // Opcjonalnie: adres linku do WD_HUB
     });
 });
 ```

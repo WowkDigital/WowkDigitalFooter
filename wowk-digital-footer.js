@@ -109,6 +109,45 @@ const WowkDigitalFooter = (() => {
         letter-spacing: 0.02em;
     }
 
+    .wowk-footer__hub-link {
+        font-size: 11px;
+        color: var(--wf-text);
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.3s ease;
+        opacity: 0.6;
+        padding: 6px 12px;
+        border-radius: 20px;
+        border: 1px solid var(--wf-border);
+        background: rgba(255, 255, 255, 0.02);
+        margin: 4px 0;
+    }
+
+    .wowk-footer__hub-link:hover {
+        opacity: 1;
+        color: var(--wf-brand);
+        border-color: rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.05);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .wowk-footer__hub-link svg {
+        width: 12px;
+        height: 12px;
+        fill: currentColor;
+        transition: transform 0.3s ease;
+    }
+
+    .wowk-footer__hub-link:hover svg {
+        transform: scale(1.1);
+    }
+
     @keyframes wf-heartbeat {
         0% { transform: scale(1); }
         14% { transform: scale(1.3); }
@@ -122,6 +161,13 @@ const WowkDigitalFooter = (() => {
             --wf-text: #64748b;
             --wf-brand: #0f172a;
             --wf-border: rgba(0, 0, 0, 0.06);
+        }
+        .wowk-footer__hub-link {
+            background: rgba(0, 0, 0, 0.02);
+        }
+        .wowk-footer__hub-link:hover {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.1);
         }
     }
     `;
@@ -139,7 +185,9 @@ const WowkDigitalFooter = (() => {
             siteName = 'Sivis Drive',
             container = 'body',
             brandName = 'Wowk Digital',
-            brandUrl = 'https://github.com/WowkDigital'
+            brandUrl = 'https://github.com/WowkDigital',
+            showHubLink = true,
+            hubUrl = 'https://wowkdigital.github.io/WD_HUB/'
         } = options;
 
         injectStyles();
@@ -156,6 +204,14 @@ const WowkDigitalFooter = (() => {
                 </svg>
                 <span class="wowk-footer__brand-text">${brandName}</span>
             </a>
+            ${showHubLink ? `
+            <a href="${hubUrl}" target="_blank" class="wowk-footer__hub-link">
+                <svg viewBox="0 0 24 24">
+                    <path d="M4 13h6c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1zm0 8h6c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1zm10-17v4c0 .55.45 1 1 1h6c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1h-6c-.55 0-1 .45-1 1zm0 14h6c.55 0 1-.45 1-1v-8c0-.55-.45-1-1-1h-6c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1z"/>
+                </svg>
+                <span>see more WD apps</span>
+            </a>
+            ` : ''}
             <div class="wowk-footer__copyright">
                 &copy; ${new Date().getFullYear()} ${siteName}
             </div>
