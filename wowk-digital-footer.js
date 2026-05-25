@@ -14,6 +14,55 @@
  */
 
 const WowkDigitalFooter = (() => {
+    const isDarkBackground = (element) => {
+        if (!element) return false;
+        
+        let el = element;
+        let bgColor = 'rgba(0, 0, 0, 0)';
+        
+        // Traverse up to find a non-transparent background color
+        while (el && el !== document.documentElement) {
+            const style = window.getComputedStyle(el);
+            const bg = style.backgroundColor;
+            if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
+                bgColor = bg;
+                break;
+            }
+            el = el.parentElement;
+        }
+        
+        if (bgColor === 'rgba(0, 0, 0, 0)' || bgColor === 'transparent') {
+            const style = window.getComputedStyle(document.body || document.documentElement);
+            bgColor = style.backgroundColor;
+        }
+        
+        const rgb = bgColor.match(/\d+/g);
+        if (rgb && rgb.length >= 3) {
+            const r = parseInt(rgb[0], 10);
+            const g = parseInt(rgb[1], 10);
+            const b = parseInt(rgb[2], 10);
+            const alpha = rgb[3] !== undefined ? parseFloat(rgb[3]) : 1;
+            if (alpha > 0.1) {
+                // ITU-R BT.709 relative luminance formula
+                const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+                return luminance < 140;
+            }
+        }
+        
+        // Fallback to text color contrast detection if background is transparent or gradient
+        const textColor = window.getComputedStyle(element).color;
+        const textRgb = textColor.match(/\d+/g);
+        if (textRgb && textRgb.length >= 3) {
+            const r = parseInt(textRgb[0], 10);
+            const g = parseInt(textRgb[1], 10);
+            const b = parseInt(textRgb[2], 10);
+            const textLuminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+            return textLuminance > 120; // If text is light, background is likely dark
+        }
+        
+        return false;
+    };
+
     const styles = `
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
 
@@ -21,6 +70,7 @@ const WowkDigitalFooter = (() => {
         --wf-bg: transparent;
         --wf-text: #94a3b8;
         --wf-brand: #f8fafc;
+        --wf-brand-hover: #ffffff;
         --wf-accent: #ef4444;
         --wf-border: rgba(255, 255, 255, 0.06);
         
@@ -70,35 +120,33 @@ const WowkDigitalFooter = (() => {
         gap: 12px;
         text-decoration: none;
         margin: 8px 0;
+        color: var(--wf-brand);
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     
     .wowk-footer__brand svg {
         height: 28px;
         width: auto;
-        fill: var(--wf-brand);
+        fill: currentColor;
+        transition: fill 0.4s ease, filter 0.4s ease;
         filter: drop-shadow(0 0 10px rgba(255,255,255,0.05));
     }
 
     .wowk-footer__brand-text {
         font-size: 20px;
         font-weight: 800;
-        color: var(--wf-brand);
+        color: currentColor;
         letter-spacing: -0.04em;
         transition: color 0.4s ease;
     }
 
     .wowk-footer__brand:hover {
+        color: var(--wf-brand-hover);
         transform: translateY(-3px) scale(1.02);
     }
     
     .wowk-footer__brand:hover svg {
-        fill: #fff;
         filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
-    }
-
-    .wowk-footer__brand:hover .wowk-footer__brand-text {
-        color: #fff;
     }
 
     .wowk-footer__copyright {
@@ -156,19 +204,18 @@ const WowkDigitalFooter = (() => {
         70% { transform: scale(1); }
     }
 
-    @media (prefers-color-scheme: light) {
-        .wowk-footer {
-            --wf-text: #64748b;
-            --wf-brand: #0f172a;
-            --wf-border: rgba(0, 0, 0, 0.06);
-        }
-        .wowk-footer__hub-link {
-            background: rgba(0, 0, 0, 0.02);
-        }
-        .wowk-footer__hub-link:hover {
-            background: rgba(0, 0, 0, 0.04);
-            border-color: rgba(0, 0, 0, 0.1);
-        }
+    .wowk-footer--theme-light {
+        --wf-text: #64748b;
+        --wf-brand: #0f172a;
+        --wf-brand-hover: #000000;
+        --wf-border: rgba(0, 0, 0, 0.06);
+    }
+    .wowk-footer--theme-light .wowk-footer__hub-link {
+        background: rgba(0, 0, 0, 0.02);
+    }
+    .wowk-footer--theme-light .wowk-footer__hub-link:hover {
+        background: rgba(0, 0, 0, 0.04);
+        border-color: rgba(0, 0, 0, 0.1);
     }
     `;
 
@@ -187,7 +234,8 @@ const WowkDigitalFooter = (() => {
             brandName = 'Wowk Digital',
             brandUrl = 'https://github.com/WowkDigital',
             showHubLink = true,
-            hubUrl = 'https://wowkdigital.github.io/WD_HUB/'
+            hubUrl = 'https://wowkdigital.github.io/WD_HUB/',
+            theme = 'auto'
         } = options;
 
         injectStyles();
@@ -222,6 +270,25 @@ const WowkDigitalFooter = (() => {
         footer.innerHTML = footerMarkup;
 
         const target = document.querySelector(container);
+        
+        let activeTheme = theme;
+        if (activeTheme === 'auto') {
+            const isDark = isDarkBackground(target || document.body);
+            if (!isDark) {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+                    activeTheme = 'light';
+                } else {
+                    activeTheme = 'dark';
+                }
+            } else {
+                activeTheme = 'dark';
+            }
+        }
+
+        if (activeTheme === 'light') {
+            footer.classList.add('wowk-footer--theme-light');
+        }
+
         if (target) {
             // Check if there is already a wowk-footer to avoid duplicates
             const existing = target.querySelector('.wowk-footer');
