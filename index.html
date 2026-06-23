@@ -1,164 +1,839 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wowk Footer | Library Showcase</title>
-    <!-- Importing a premium font for the demo -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>Wowk Digital Footer | Interactive Documentation</title>
+    <!-- Premium Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0c0e12;
-            --text-color: #f1f5f9;
+            /* Default Dark Theme variables */
+            --bg-color: #090b10;
+            --card-bg: rgba(17, 24, 39, 0.6);
+            --card-border: rgba(255, 255, 255, 0.06);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
             --accent-color: #6366f1;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --accent-hover: #4f46e5;
+            --code-bg: #030712;
+            --hero-glow-1: rgba(99, 102, 241, 0.12);
+            --hero-glow-2: rgba(239, 68, 68, 0.04);
+            --input-bg: rgba(255, 255, 255, 0.03);
+            --input-border: rgba(255, 255, 255, 0.1);
+            --badge-bg: rgba(99, 102, 241, 0.1);
+            --table-header-bg: rgba(255, 255, 255, 0.02);
+            --table-row-hover: rgba(255, 255, 255, 0.01);
+            
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* Class to simulate light theme on the page */
+        body.light-theme {
+            --bg-color: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --card-border: rgba(15, 23, 42, 0.08);
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --accent-color: #4f46e5;
+            --accent-hover: #3730a3;
+            --code-bg: #f1f5f9;
+            --hero-glow-1: rgba(99, 102, 241, 0.06);
+            --hero-glow-2: rgba(239, 68, 68, 0.02);
+            --input-bg: #ffffff;
+            --input-border: rgba(15, 23, 42, 0.15);
+            --badge-bg: rgba(99, 102, 241, 0.08);
+            --table-header-bg: rgba(0, 0, 0, 0.03);
+            --table-row-hover: rgba(0, 0, 0, 0.01);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
-            padding: 0;
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        .hero {
-            flex: 1;
+        /* Premium Glow Backgrounds */
+        .glow-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .glow-1 {
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 800px;
+            height: 800px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--hero-glow-1) 0%, transparent 70%);
+            filter: blur(80px);
+            transition: background 0.4s ease;
+        }
+
+        .glow-2 {
+            position: absolute;
+            bottom: 20%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--hero-glow-2) 0%, transparent 70%);
+            filter: blur(60px);
+            transition: background 0.4s ease;
+        }
+
+        /* Header / Navigation */
+        header {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 24px 20px;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: -0.03em;
+        }
+
+        .logo-area svg {
+            height: 24px;
+            fill: var(--accent-color);
+        }
+
+        .logo-area span {
+            background: linear-gradient(135deg, var(--text-main) 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Theme switch button */
+        .btn-theme-toggle {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 10px 18px;
+            border-radius: 100px;
+            color: var(--text-main);
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-theme-toggle:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-color);
+            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.15);
+        }
+
+        /* Main Container */
+        main {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+            flex: 1;
+        }
+
+        /* Hero */
+        .hero {
             text-align: center;
-            padding: 80px 20px;
-            background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.1), transparent 40%),
-                        radial-gradient(circle at bottom left, rgba(239, 68, 68, 0.05), transparent 30%);
+            margin-bottom: 60px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--badge-bg);
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 20px;
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-size: clamp(2.2rem, 6vw, 3.8rem);
             font-weight: 800;
-            margin: 0;
-            letter-spacing: -0.05em;
-            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            line-height: 1.15;
+            letter-spacing: -0.04em;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--text-main) 30%, var(--accent-color) 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .hero p {
-            font-size: 1.25rem;
-            color: #94a3b8;
-            max-width: 600px;
-            line-height: 1.6;
-            margin: 24px 0 40px;
-            font-weight: 300;
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 680px;
+            margin: 0 auto;
         }
 
-        .badge {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            padding: 8px 16px;
-            border-radius: 100px;
-            font-size: 0.85rem;
-            color: var(--accent-color);
-            font-weight: 600;
-            margin-bottom: 24px;
-            backdrop-filter: blur(10px);
+        /* Grid Sandbox */
+        .sandbox-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 30px;
+            margin-bottom: 80px;
         }
 
-        .code-box {
-            background: #000;
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 24px;
-            width: 100%;
-            max-width: 500px;
-            text-align: left;
+        @media (max-width: 900px) {
+            .sandbox-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(12px);
             position: relative;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
-        .code-box::before {
-            content: 'Example Usage';
-            position: absolute;
-            top: -12px;
-            left: 20px;
+        .card h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.02em;
+        }
+
+        .card h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 18px;
             background: var(--accent-color);
-            color: white;
-            font-size: 0.65rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            padding: 4px 10px;
             border-radius: 4px;
         }
 
-        code {
-            color: #818cf8;
-            font-family: 'Monaco', 'Consolas', monospace;
+        /* Forms */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .form-group input[type="text"],
+        .form-group select {
+            width: 100%;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            padding: 12px 16px;
+            border-radius: 10px;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 25px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .checkbox-group input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent-color);
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
             font-size: 0.9rem;
-            line-height: 1.5;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Code box */
+        .code-preview-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .code-box-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--code-bg);
+            border: 1px solid var(--card-border);
+            border-bottom: none;
+            padding: 12px 20px;
+            border-radius: 12px 12px 0 0;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .code-box {
+            background: var(--code-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 0 0 12px 12px;
+            padding: 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            flex: 1;
+            color: #a5b4fc;
+        }
+
+        .btn-copy {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .btn-copy:hover {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
         }
 
         .code-comment { color: #4b5563; }
         .code-key { color: #f472b6; }
         .code-val { color: #34d399; }
+        .code-num { color: #fbbf24; }
 
-        /* Light mode overrides */
-        @media (prefers-color-scheme: light) {
-            :root {
-                --bg-color: #f8fafc;
-                --text-color: #0f172a;
-                --glass-bg: rgba(0, 0, 0, 0.02);
-                --glass-border: rgba(0, 0, 0, 0.08);
+        /* Integration documentation */
+        .docs-section {
+            margin-bottom: 60px;
+        }
+
+        .docs-section h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            letter-spacing: -0.03em;
+            text-align: center;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .step-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .step-num {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            font-weight: 800;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .step-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .step-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .step-card pre {
+            background: var(--code-bg);
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            overflow-x: auto;
+            color: #d8b4fe;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+
+        /* API Parameters Table */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            margin-bottom: 50px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: var(--table-header-bg);
+            padding: 16px 20px;
+            font-weight: 700;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--card-border);
+            color: var(--text-muted);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: var(--table-row-hover);
+        }
+
+        td code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            background: rgba(99, 102, 241, 0.08);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* Customization CSS variables */
+        .css-vars-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .css-vars-grid {
+                grid-template-columns: 1fr;
             }
-            .hero h1 {
-                background: linear-gradient(135deg, #0f172a 0%, #475569 100%);
-                -webkit-background-clip: text;
-                background-clip: text;
-                -webkit-text-fill-color: transparent;
-            }
-            .code-box {
-                background: #fff;
-                box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-            }
+        }
+
+        .css-vars-list {
+            list-style: none;
+        }
+
+        .css-vars-list li {
+            display: flex;
+            flex-direction: column;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .css-vars-list li:last-child {
+            border-bottom: none;
+        }
+
+        .css-var-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--accent-color);
+            margin-bottom: 4px;
+        }
+
+        .css-var-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .css-var-desc span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-main);
+            background: var(--code-bg);
+            padding: 1px 4px;
+            border-radius: 3px;
         }
     </style>
 </head>
 <body>
 
-    <section class="hero">
-        <div class="badge">Wowk Footer v1.0.0</div>
-        <h1>Elegant, Micro-animated Footers</h1>
-        <p>A minimalist, drop-in footer solution for Wowk Digital projects. Effortlessly beautiful across all your applications.</p>
+    <div class="glow-bg">
+        <div class="glow-1"></div>
+        <div class="glow-2"></div>
+    </div>
 
-        <div class="code-box">
-            <code>
-                <span class="code-comment">// Simply include and run</span><br>
-                WowkDigitalFooter.<span class="code-key">init</span>({<br>
-                &nbsp;&nbsp;siteName: <span class="code-val">'Library Demo Site'</span>,<br>
-                &nbsp;&nbsp;container: <span class="code-val">'body'</span>,<br>
-                &nbsp;&nbsp;brandName: <span class="code-val">'Wowk Digital'</span>,<br>
-                &nbsp;&nbsp;brandUrl: <span class="code-val">'https://github.com/WowkDigital'</span><br>
-                });
-            </code>
+    <header>
+        <div class="logo-area">
+            <!-- Wowk Digital Logo SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 110">
+                <path d="M0 0 64 110 80 83 96 110 120 69 143 110 159 110 127 55 159 0 143 0 96 83 88 69 127 0 32 0 64 55 80 28 64 28 56 14 104 14 64 83 16 0z"/>
+            </svg>
+            <span>Wowk Footer Docs</span>
         </div>
-    </section>
+        <button id="theme-toggle" class="btn-theme-toggle">
+            <span id="theme-toggle-icon">☀️</span>
+            <span id="theme-toggle-text">Try Light Mode</span>
+        </button>
+    </header>
 
-    <!-- The actual script and initialization -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="badge">Library v1.0.0</div>
+            <h1>Interactive Footer Deployment</h1>
+            <p>Optimized, lightweight footer script for web applications. Tweak the parameters in real-time below and instantly generate ready-to-use integration code.</p>
+        </section>
+
+        <!-- Sandbox & Generator -->
+        <section class="sandbox-grid">
+            <!-- Sandbox Card -->
+            <div class="card">
+                <h2>Interactive Sandbox</h2>
+                
+                <div class="form-group" style="margin-top: 15px;">
+                    <label for="site-name-input">Site Name (siteName)</label>
+                    <input type="text" id="site-name-input" value="Sivis Drive">
+                </div>
+
+                <div class="form-group">
+                    <label for="theme-input">Color Theme (theme)</label>
+                    <select id="theme-input">
+                        <option value="auto" selected>auto (detects background color)</option>
+                        <option value="light">light (force light theme)</option>
+                        <option value="dark">dark (force dark theme)</option>
+                    </select>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="hub-link-input" checked>
+                    <label for="hub-link-input">Show WD HUB projects link (showHubLink)</label>
+                </div>
+            </div>
+
+            <!-- Code Preview Card -->
+            <div class="code-preview-container">
+                <div class="code-box-header">
+                    <span>Initialization Code</span>
+                    <button class="btn-copy" id="btn-copy-code">Copy Code</button>
+                </div>
+                <div class="code-box">
+                    <pre><code id="live-code-snippet"></code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Steps Guide -->
+        <section class="docs-section">
+            <h2>Step-by-Step Integration Guide</h2>
+            
+            <div class="steps-grid">
+                <!-- Step 1 -->
+                <div class="step-card">
+                    <div class="step-num">1</div>
+                    <h3>Include CDN Script</h3>
+                    <p>Include the script inside the <code>&lt;head&gt;</code> tag or right before the closing <code>&lt;/body&gt;</code> tag:</p>
+                    <pre><code>&lt;script src="https://cdn.jsdelivr.net/gh/WowkDigital/WowkDigitalFooter@latest/wowk-digital-footer.js"&gt;&lt;/script&gt;</code></pre>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <h3>Initialize Footer</h3>
+                    <p>Initialize the footer using JavaScript with your custom configuration:</p>
+                    <pre><code>document.addEventListener('DOMContentLoaded', () => {
+  WowkDigitalFooter.init({
+    siteName: 'Your Site Name'
+  });
+});</code></pre>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <h3>Smart Contrast</h3>
+                    <p>The script automatically calculates background contrast and applies the optimal theme dynamically.</p>
+                </div>
+            </div>
+
+            <!-- Configuration API Parameters Table -->
+            <h3 style="font-size: 1.4rem; margin-bottom: 20px; font-weight: 700; text-align: left;">Configuration API Properties</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>siteName</code></td>
+                            <td><code>string</code></td>
+                            <td><code>'Sivis Drive'</code></td>
+                            <td>Site name shown in the copyright section.</td>
+                        </tr>
+                        <tr>
+                            <td><code>container</code></td>
+                            <td><code>string</code></td>
+                            <td><code>'body'</code></td>
+                            <td>CSS selector for the parent target element.</td>
+                        </tr>
+                        <tr>
+                            <td><code>brandName</code></td>
+                            <td><code>string</code></td>
+                            <td><code>'Wowk Digital'</code></td>
+                            <td>Brand/company name displayed next to the logo.</td>
+                        </tr>
+                        <tr>
+                            <td><code>brandUrl</code></td>
+                            <td><code>string</code></td>
+                            <td><code>'https://github.com/...'</code></td>
+                            <td>Target URL when clicking on the brand logo.</td>
+                        </tr>
+                        <tr>
+                            <td><code>showHubLink</code></td>
+                            <td><code>boolean</code></td>
+                            <td><code>true</code></td>
+                            <td>Show or hide the button pointing to the WD HUB central projects directory.</td>
+                        </tr>
+                        <tr>
+                            <td><code>hubUrl</code></td>
+                            <td><code>string</code></td>
+                            <td><code>'https://...'</code></td>
+                            <td>Target URL of the central applications hub.</td>
+                        </tr>
+                        <tr>
+                            <td><code>theme</code></td>
+                            <td><code>string</code></td>
+                            <td><code>'auto'</code></td>
+                            <td>Color theme: <code>'auto'</code> (smart contrast), <code>'light'</code> or <code>'dark'</code>.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- CSS variables overrides -->
+            <div class="card" style="margin-bottom: 40px;">
+                <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 15px;">Custom Styling (CSS Variables)</h3>
+                <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 25px;">You can easily customize footer colors by overriding CSS variables in your project styles. No need to modify the JS file!</p>
+                
+                <div class="css-vars-grid">
+                    <div>
+                        <ul class="css-vars-list">
+                            <li>
+                                <div class="css-var-name">--wf-bg</div>
+                                <div class="css-var-desc">Footer background color. Default: <span>transparent</span></div>
+                            </li>
+                            <li>
+                                <div class="css-var-name">--wf-text</div>
+                                <div class="css-var-desc">Text and copyright color. Default: <span>#94a3b8</span> (dark) / <span>#64748b</span> (light)</div>
+                            </li>
+                            <li>
+                                <div class="css-var-name">--wf-brand</div>
+                                <div class="css-var-desc">Brand logo and name color. Default: <span>#f8fafc</span> (dark) / <span>#0f172a</span> (light)</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul class="css-vars-list">
+                            <li>
+                                <div class="css-var-name">--wf-brand-hover</div>
+                                <div class="css-var-desc">Brand logo hover color. Default: <span>#ffffff</span> / <span>#000000</span></div>
+                            </li>
+                            <li>
+                                <div class="css-var-name">--wf-accent</div>
+                                <div class="css-var-desc">Animated heartbeat heart color. Default: <span>#ef4444</span></div>
+                            </li>
+                            <li>
+                                <div class="css-var-name">--wf-border</div>
+                                <div class="css-var-desc">Top border line color. Default: <span>rgba(255,255,255,0.06)</span></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Import footer library -->
     <script src="wowk-digital-footer.js"></script>
+
+    <!-- Page Interaction Logic -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            WowkDigitalFooter.init({
-                siteName: 'Library Demo Site',
-                container: 'body',
-                brandName: 'Wowk Digital',
-                brandUrl: 'https://github.com/WowkDigital'
+        const siteNameInput = document.getElementById('site-name-input');
+        const themeInput = document.getElementById('theme-input');
+        const hubLinkInput = document.getElementById('hub-link-input');
+        const liveCodeSnippet = document.getElementById('live-code-snippet');
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeToggleIcon = document.getElementById('theme-toggle-icon');
+        const themeToggleText = document.getElementById('theme-toggle-text');
+        const btnCopyCode = document.getElementById('btn-copy-code');
+
+        // Function generating live code snippet and rendering the footer on the fly
+        function updateLiveCodeAndFooter() {
+            const siteName = siteNameInput.value.replace(/'/g, "\\'");
+            const theme = themeInput.value;
+            const showHubLink = hubLinkInput.checked;
+
+            // Generate highlightable text code snippet
+            let codeHtml = `<span class="code-comment">&lt;!-- Load Footer Library --&gt;</span>\n`;
+            codeHtml += `<span class="code-val">&lt;script src="https://cdn.jsdelivr.net/gh/WowkDigital/WowkDigitalFooter@latest/wowk-digital-footer.js"&gt;&lt;/script&gt;</span>\n\n`;
+            codeHtml += `<span class="code-comment">&lt;!-- Initialize Footer --&gt;</span>\n`;
+            codeHtml += `<span class="code-val">&lt;script&gt;</span>\n`;
+            codeHtml += `  document.<span class="code-key">addEventListener</span>(<span class="code-val">'DOMContentLoaded'</span>, () => {\n`;
+            codeHtml += `    WowkDigitalFooter.<span class="code-key">init</span>({\n`;
+            codeHtml += `      siteName: <span class="code-val">'${siteName}'</span>,\n`;
+            codeHtml += `      theme: <span class="code-val">'${theme}'</span>,\n`;
+            codeHtml += `      showHubLink: <span class="code-num">${showHubLink}</span>\n`;
+            codeHtml += `    });\n`;
+            codeHtml += `  });\n`;
+            codeHtml += `<span class="code-val">&lt;/script&gt;</span>`;
+
+            liveCodeSnippet.innerHTML = codeHtml;
+
+            // Re-initialize the actual footer on the showcase body
+            if (window.WowkDigitalFooter) {
+                WowkDigitalFooter.init({
+                    siteName: siteNameInput.value || 'Sivis Drive',
+                    container: 'body',
+                    brandName: 'Wowk Digital',
+                    brandUrl: 'https://github.com/WowkDigital',
+                    showHubLink: showHubLink,
+                    theme: theme
+                });
+            }
+        }
+
+        // Handle page demo theme toggle
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-theme');
+            const isLight = document.body.classList.contains('light-theme');
+            
+            if (isLight) {
+                themeToggleIcon.textContent = '🌙';
+                themeToggleText.textContent = 'Try Dark Mode';
+            } else {
+                themeToggleIcon.textContent = '☀️';
+                themeToggleText.textContent = 'Try Light Mode';
+            }
+            
+            // Re-render footer to let Smart Theme pick up the new container background color
+            updateLiveCodeAndFooter();
+        });
+
+        // Copy button action
+        btnCopyCode.addEventListener('click', () => {
+            const rawText = `<!-- Load Footer Library -->
+<script src="https://cdn.jsdelivr.net/gh/WowkDigital/WowkDigitalFooter@latest/wowk-digital-footer.js"><\/script>
+
+<!-- Initialize Footer -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    WowkDigitalFooter.init({
+      siteName: '${siteNameInput.value.replace(/'/g, "\\'")}',
+      theme: '${themeInput.value}',
+      showHubLink: ${hubLinkInput.checked}
+    });
+  });
+<\/script>`;
+            
+            navigator.clipboard.writeText(rawText).then(() => {
+                const originalText = btnCopyCode.textContent;
+                btnCopyCode.textContent = 'Copied!';
+                btnCopyCode.style.background = '#10b981';
+                btnCopyCode.style.borderColor = '#10b981';
+                setTimeout(() => {
+                    btnCopyCode.textContent = originalText;
+                    btnCopyCode.style.background = '';
+                    btnCopyCode.style.borderColor = '';
+                }, 2000);
+            }).catch(err => {
+                console.error('Error copying code: ', err);
             });
+        });
+
+        // Listen for input changes in form controls
+        siteNameInput.addEventListener('input', updateLiveCodeAndFooter);
+        themeInput.addEventListener('change', updateLiveCodeAndFooter);
+        hubLinkInput.addEventListener('change', updateLiveCodeAndFooter);
+
+        // Run once on load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateLiveCodeAndFooter();
         });
     </script>
 </body>
