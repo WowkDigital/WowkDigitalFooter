@@ -568,6 +568,26 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="container-input">CSS Container Selector (container)</label>
+                    <input type="text" id="container-input" value="body">
+                </div>
+
+                <div class="form-group">
+                    <label for="brand-name-input">Brand Name (brandName)</label>
+                    <input type="text" id="brand-name-input" value="Wowk Digital">
+                </div>
+
+                <div class="form-group">
+                    <label for="brand-url-input">Brand URL (brandUrl)</label>
+                    <input type="text" id="brand-url-input" value="https://github.com/WowkDigital">
+                </div>
+
+                <div class="form-group">
+                    <label for="hub-url-input">WD HUB URL (hubUrl)</label>
+                    <input type="text" id="hub-url-input" value="https://wowkdigital.github.io/WD_HUB/">
+                </div>
+
+                <div class="form-group">
                     <label for="theme-input">Color Theme (theme)</label>
                     <select id="theme-input">
                         <option value="auto" selected>auto (detects background color)</option>
@@ -735,6 +755,10 @@
     <!-- Page Interaction Logic -->
     <script>
         const siteNameInput = document.getElementById('site-name-input');
+        const containerInput = document.getElementById('container-input');
+        const brandNameInput = document.getElementById('brand-name-input');
+        const brandUrlInput = document.getElementById('brand-url-input');
+        const hubUrlInput = document.getElementById('hub-url-input');
         const themeInput = document.getElementById('theme-input');
         const hubLinkInput = document.getElementById('hub-link-input');
         const liveCodeSnippet = document.getElementById('live-code-snippet');
@@ -746,6 +770,10 @@
         // Function generating live code snippet and rendering the footer on the fly
         function updateLiveCodeAndFooter() {
             const siteName = siteNameInput.value.replace(/'/g, "\\'");
+            const container = containerInput.value.replace(/'/g, "\\'");
+            const brandName = brandNameInput.value.replace(/'/g, "\\'");
+            const brandUrl = brandUrlInput.value.replace(/'/g, "\\'");
+            const hubUrl = hubUrlInput.value.replace(/'/g, "\\'");
             const theme = themeInput.value;
             const showHubLink = hubLinkInput.checked;
 
@@ -757,8 +785,12 @@
             codeHtml += `  document.<span class="code-key">addEventListener</span>(<span class="code-val">'DOMContentLoaded'</span>, () => {\n`;
             codeHtml += `    WowkDigitalFooter.<span class="code-key">init</span>({\n`;
             codeHtml += `      siteName: <span class="code-val">'${siteName}'</span>,\n`;
-            codeHtml += `      theme: <span class="code-val">'${theme}'</span>,\n`;
-            codeHtml += `      showHubLink: <span class="code-num">${showHubLink}</span>\n`;
+            codeHtml += `      container: <span class="code-val">'${container}'</span>,\n`;
+            codeHtml += `      brandName: <span class="code-val">'${brandName}'</span>,\n`;
+            codeHtml += `      brandUrl: <span class="code-val">'${brandUrl}'</span>,\n`;
+            codeHtml += `      showHubLink: <span class="code-num">${showHubLink}</span>,\n`;
+            codeHtml += `      hubUrl: <span class="code-val">'${hubUrl}'</span>,\n`;
+            codeHtml += `      theme: <span class="code-val">'${theme}'</span>\n`;
             codeHtml += `    });\n`;
             codeHtml += `  });\n`;
             codeHtml += `<span class="code-val">&lt;/script&gt;</span>`;
@@ -769,10 +801,11 @@
             if (window.WowkDigitalFooter) {
                 WowkDigitalFooter.init({
                     siteName: siteNameInput.value || 'Sivis Drive',
-                    container: 'body',
-                    brandName: 'Wowk Digital',
-                    brandUrl: 'https://github.com/WowkDigital',
+                    container: containerInput.value || 'body',
+                    brandName: brandNameInput.value || 'Wowk Digital',
+                    brandUrl: brandUrlInput.value || 'https://github.com/WowkDigital',
                     showHubLink: showHubLink,
+                    hubUrl: hubUrlInput.value || 'https://wowkdigital.github.io/WD_HUB/',
                     theme: theme
                 });
             }
@@ -805,8 +838,12 @@
   document.addEventListener('DOMContentLoaded', () => {
     WowkDigitalFooter.init({
       siteName: '${siteNameInput.value.replace(/'/g, "\\'")}',
-      theme: '${themeInput.value}',
-      showHubLink: ${hubLinkInput.checked}
+      container: '${containerInput.value.replace(/'/g, "\\'")}',
+      brandName: '${brandNameInput.value.replace(/'/g, "\\'")}',
+      brandUrl: '${brandUrlInput.value.replace(/'/g, "\\'")}',
+      showHubLink: ${hubLinkInput.checked},
+      hubUrl: '${hubUrlInput.value.replace(/'/g, "\\'")}',
+      theme: '${themeInput.value}'
     });
   });
 <\/script>`;
@@ -828,6 +865,10 @@
 
         // Listen for input changes in form controls
         siteNameInput.addEventListener('input', updateLiveCodeAndFooter);
+        containerInput.addEventListener('input', updateLiveCodeAndFooter);
+        brandNameInput.addEventListener('input', updateLiveCodeAndFooter);
+        brandUrlInput.addEventListener('input', updateLiveCodeAndFooter);
+        hubUrlInput.addEventListener('input', updateLiveCodeAndFooter);
         themeInput.addEventListener('change', updateLiveCodeAndFooter);
         hubLinkInput.addEventListener('change', updateLiveCodeAndFooter);
 
