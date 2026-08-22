@@ -4,6 +4,32 @@ A modern, responsive, and lightweight drop-in footer component designed for proj
 
 [![Live Demo](https://img.shields.io/badge/DEMO-Live_Preview-blueviolet?style=for-the-badge&logo=github)](https://WowkDigital.github.io/WowkDigitalFooter/)
 
+## 🤖 AI Coding Agent Prompt (Cursor / ChatGPT / Claude / Antigravity)
+
+Copy & paste this prompt directly into your AI Assistant to quickly install the footer into any project:
+
+```text
+Zadanie dla Agenta AI: Zintegruj oficjalną stopkę Wowk Digital Footer w tym projekcie.
+
+1. Dołącz skrypt biblioteki z CDN:
+   <script src="https://cdn.jsdelivr.net/gh/WowkDigital/WowkDigitalFooter@latest/wowk-digital-footer.js"></script>
+
+2. Zainicjalizuj komponent w kodzie aplikacji po załadowaniu DOM:
+   document.addEventListener('DOMContentLoaded', () => {
+     if (window.WowkDigitalFooter) {
+       WowkDigitalFooter.init({
+         siteName: 'Your Site Name',       // e.g. 'Sivis Drive'
+         container: 'body',                // target container selector
+         brandName: 'Wowk Digital',        // brand label
+         brandUrl: 'https://github.com/WowkDigital',
+         showHubLink: true,                // 'see more WD apps' button
+         hubUrl: 'https://wowkdigital.github.io/WD_HUB/',
+         theme: 'auto'                     // 'auto' (smart contrast), 'dark' or 'light'
+       });
+     }
+   });
+```
+
 ---
 
 ## 🚀 Quick Start (CDN)
