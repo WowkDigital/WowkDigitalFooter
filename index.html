@@ -681,13 +681,45 @@
             margin-bottom: 40px;
         }
 
-        .preview-toolbar {
+        .preview-header-area {
+            margin-bottom: 20px;
+        }
+
+        .preview-controls-panel {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 14px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+        }
+
+        .preview-controls-row {
+            display: flex;
             align-items: center;
+            justify-content: space-between;
             flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 16px;
+            gap: 14px;
+        }
+
+        .preview-control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .preview-control-label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .bg-switcher-group {
@@ -697,53 +729,398 @@
             flex-wrap: wrap;
         }
 
-        .bg-switcher-title {
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
         .bg-chip {
-            width: 24px;
-            height: 24px;
-            border-radius: 6px;
+            width: 26px;
+            height: 26px;
+            border-radius: 7px;
             cursor: pointer;
             border: 2px solid transparent;
-            transition: all 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
 
         .bg-chip:hover {
-            transform: scale(1.15);
+            transform: scale(1.18);
         }
 
         .bg-chip.active {
             border-color: var(--accent);
-            box-shadow: 0 0 8px var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+            transform: scale(1.08);
         }
 
-        .preview-stage {
+        .color-picker-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--input-border);
+            padding: 2px 8px 2px 4px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .color-picker-wrapper input[type="color"] {
+            -webkit-appearance: none;
+            border: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            background: none;
+        }
+
+        .color-picker-wrapper input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        .color-picker-wrapper input[type="color"]::-webkit-color-swatch {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        .color-picker-hex {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .preview-btn-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .preview-pill-btn {
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid var(--card-border);
-            border-radius: 14px;
-            overflow: hidden;
-            background-color: var(--preview-bg);
-            transition: background-color 0.3s ease;
-            position: relative;
-            padding: 20px 0 0;
+            color: var(--text-muted);
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: inherit;
         }
 
-        .preview-stage-tag {
-            position: absolute;
-            top: 12px;
-            right: 16px;
+        .preview-pill-btn:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--card-border-hover);
+        }
+
+        .preview-pill-btn.active {
+            background: var(--tab-active-bg);
+            color: var(--accent);
+            border-color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* Mockup Window Chrome */
+        .preview-window-frame {
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            overflow: hidden;
+            background: #090b10;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+            transition: border-color 0.3s ease;
+        }
+
+        .window-chrome {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 18px;
+            background: rgba(15, 20, 31, 0.95);
+            border-bottom: 1px solid var(--card-border);
+            gap: 12px;
+            user-select: none;
+        }
+
+        .win-dots {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .win-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .win-dot.red { background: #ff5f56; }
+        .win-dot.yellow { background: #ffbd2e; }
+        .win-dot.green { background: #27c93f; }
+
+        .win-address-bar {
+            flex: 1;
+            max-width: 480px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .win-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .live-contrast-badge {
             font-size: 0.72rem;
             font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: rgba(99, 102, 241, 0.15);
+            color: #818cf8;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: 0.02em;
+        }
+
+        .viewport-badge {
+            font-size: 0.7rem;
+            font-weight: 600;
             padding: 3px 8px;
             border-radius: 6px;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-subtle);
+        }
+
+        /* Viewport Stage */
+        .preview-stage {
+            min-height: 220px;
+            transition: background 0.3s ease;
+            position: relative;
+            padding: 0;
+            overflow: hidden;
+            background-color: var(--preview-bg);
+        }
+
+        .preview-viewport-wrapper {
+            margin: 0 auto;
+            width: 100%;
+            max-width: 100%;
+            transition: max-width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            min-height: 220px;
+        }
+
+        /* Simulated Web Page Content */
+        .preview-mock-page {
+            padding: 28px 24px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .preview-mock-page.hidden {
+            display: none;
+        }
+
+        .mock-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            gap: 12px;
+        }
+
+        .mock-nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--text-main);
+        }
+
+        .mock-logo-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+            background: var(--accent);
+        }
+
+        .mock-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 0.75rem;
             color: var(--text-muted);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(8px);
+        }
+
+        .mock-nav-link.active {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .mock-user-pill {
+            display: flex;
+            align-items: center;
+        }
+
+        .mock-avatar {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #ffffff;
+            font-size: 0.65rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mock-hero-banner {
+            padding: 20px 20px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .mock-badge {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            background: var(--tab-active-bg);
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 8px;
+        }
+
+        .mock-heading {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .mock-subheading {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        .mock-cards-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+        }
+
+        .mock-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .mock-card-icon {
+            font-size: 1.1rem;
+        }
+
+        .mock-card-val {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .mock-card-lbl {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* Mock light mode theme overrides */
+        .preview-mock-page.mock-light .mock-nav {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+        .preview-mock-page.mock-light .mock-nav-brand,
+        .preview-mock-page.mock-light .mock-nav-link.active,
+        .preview-mock-page.mock-light .mock-heading,
+        .preview-mock-page.mock-light .mock-card-val {
+            color: #0f172a;
+        }
+        .preview-mock-page.mock-light .mock-nav-links,
+        .preview-mock-page.mock-light .mock-subheading,
+        .preview-mock-page.mock-light .mock-card-lbl {
+            color: #64748b;
+        }
+        .preview-mock-page.mock-light .mock-hero-banner {
+            background: rgba(0, 0, 0, 0.02);
+            border-color: rgba(0, 0, 0, 0.12);
+        }
+        .preview-mock-page.mock-light .mock-card {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.07);
+        }
+
+        /* Light Theme Overrides for Chrome & Controls */
+        body.light-theme .preview-controls-panel {
+            background: rgba(15, 23, 42, 0.02);
+            border-color: rgba(15, 23, 42, 0.08);
+        }
+        body.light-theme .window-chrome {
+            background: #ffffff;
+            border-color: rgba(15, 23, 42, 0.08);
+        }
+        body.light-theme .win-address-bar {
+            background: #f1f5f9;
+            border-color: rgba(15, 23, 42, 0.08);
+            color: #475569;
+        }
+        body.light-theme .preview-window-frame {
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+        }
+        body.light-theme .preview-pill-btn {
+            background: #ffffff;
+            border-color: rgba(15, 23, 42, 0.1);
+        }
+        body.light-theme .preview-pill-btn:hover {
+            background: #f8fafc;
+            border-color: rgba(99, 102, 241, 0.4);
+        }
+        body.light-theme .preview-pill-btn.active {
+            background: rgba(79, 70, 229, 0.1);
+            color: #4f46e5;
+            border-color: #4f46e5;
         }
 
         /* Guide Steps */
@@ -1093,31 +1470,145 @@
 
         <!-- ⭐ SECTION 3: LIVE INTERACTIVE PREVIEW -->
         <section id="preview-section" class="glass-card preview-card">
-            <div class="preview-toolbar">
-                <div>
-                    <h2 class="section-title">
-                        <span class="section-title-icon">👁️</span>
-                        Podgląd na żywo
-                    </h2>
-                    <p class="card-subtext">Stopka renderuje się poniżej w czasie rzeczywistym. Przetestuj reakcję na różne tła:</p>
-                </div>
-
-                <!-- Background color switcher for testing smart contrast -->
-                <div class="bg-switcher-group">
-                    <span class="bg-switcher-title">Tło kontenera:</span>
-                    <div class="bg-chip active" style="background-color: #090b10;" data-bg="#090b10" title="Głęboka czerń (#090b10)"></div>
-                    <div class="bg-chip" style="background-color: #0f172a;" data-bg="#0f172a" title="Granatowy grafit (#0f172a)"></div>
-                    <div class="bg-chip" style="background-color: #ffffff; border-color: rgba(0,0,0,0.15);" data-bg="#ffffff" title="Czysta biel (#ffffff)"></div>
-                    <div class="bg-chip" style="background-color: #f1f5f9; border-color: rgba(0,0,0,0.1);" data-bg="#f1f5f9" title="Jasny slate (#f1f5f9)"></div>
-                    <div class="bg-chip" style="background: linear-gradient(135deg, #1e1b4b, #312e81);" data-bg="linear-gradient(135deg, #1e1b4b, #312e81)" title="Fioletowy gradient"></div>
+            <div class="preview-header-area">
+                <div class="card-header-flex">
+                    <div>
+                        <h2 class="section-title">
+                            <span class="section-title-icon">👁️</span>
+                            Interaktywny Podgląd na Żywo
+                        </h2>
+                        <p class="card-subtext">Stopka renderuje się poniżej w czasie rzeczywistym. Przetestuj inteligentny algorytm kontrastu ITU-R BT.709 na różnych tłach, symuluj widoki urządzeń (RWD) lub zobacz stopkę w kontekście atrap strony:</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Stage where footer will mount -->
-            <div class="preview-stage" id="live-footer-stage">
-                <span class="preview-stage-tag" id="theme-status-tag">Auto Theme</span>
-                <!-- Mount point for wowk footer -->
-                <div id="footer-mount-container"></div>
+            <!-- Interactive Controls Panel -->
+            <div class="preview-controls-panel">
+                <!-- Row 1: Background & Contrast Testing -->
+                <div class="preview-controls-row">
+                    <div class="preview-control-group">
+                        <span class="preview-control-label">🎨 Tło do testu kontrastu:</span>
+                        <div class="bg-switcher-group" id="bg-swatches-container">
+                            <div class="bg-chip active" style="background-color: #090b10;" data-bg="#090b10" title="Głęboka czerń (#090b10)"></div>
+                            <div class="bg-chip" style="background-color: #0f172a;" data-bg="#0f172a" title="Granatowy grafit (#0f172a)"></div>
+                            <div class="bg-chip" style="background-color: #ffffff; border-color: rgba(0,0,0,0.15);" data-bg="#ffffff" title="Czysta biel (#ffffff)"></div>
+                            <div class="bg-chip" style="background-color: #f8fafc; border-color: rgba(0,0,0,0.1);" data-bg="#f8fafc" title="Jasny slate (#f8fafc)"></div>
+                            <div class="bg-chip" style="background: linear-gradient(135deg, #1e1b4b, #312e81);" data-bg="linear-gradient(135deg, #1e1b4b, #312e81)" title="Fioletowy gradient (#1e1b4b -> #312e81)"></div>
+                            <div class="bg-chip" style="background-color: #064e3b;" data-bg="#064e3b" title="Ciemny szmaragd (#064e3b)"></div>
+                            <div class="bg-chip" style="background-color: #fef3c7; border-color: rgba(0,0,0,0.15);" data-bg="#fef3c7" title="Ciepły krem (#fef3c7)"></div>
+                        </div>
+
+                        <!-- Custom Color Picker -->
+                        <div class="color-picker-wrapper" title="Wybierz dowolny własny kolor tła">
+                            <input type="color" id="preview-custom-bg" value="#090b10">
+                            <span class="color-picker-hex" id="preview-custom-hex">#090b10</span>
+                        </div>
+                    </div>
+
+                    <!-- Fast Theme Mode Override -->
+                    <div class="preview-control-group">
+                        <span class="preview-control-label">🌓 Tryb motywu:</span>
+                        <div class="preview-btn-group" id="theme-mode-pills">
+                            <button type="button" class="preview-pill-btn active" data-theme-val="auto">Auto Contrast</button>
+                            <button type="button" class="preview-pill-btn" data-theme-val="dark">Wymuś Dark</button>
+                            <button type="button" class="preview-pill-btn" data-theme-val="light">Wymuś Light</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 2: Viewport / RWD & Mock Page Switch -->
+                <div class="preview-controls-row" style="border-top: 1px solid var(--card-border); padding-top: 12px; margin-top: 2px;">
+                    <div class="preview-control-group">
+                        <span class="preview-control-label">📱 Widok RWD:</span>
+                        <div class="preview-btn-group" id="viewport-pills">
+                            <button type="button" class="preview-pill-btn active" data-width="100%">🖥️ Desktop (100%)</button>
+                            <button type="button" class="preview-pill-btn" data-width="1024px">💻 Laptop (1024px)</button>
+                            <button type="button" class="preview-pill-btn" data-width="768px">📱 Tablet (768px)</button>
+                            <button type="button" class="preview-pill-btn" data-width="390px">📲 Mobile (390px)</button>
+                        </div>
+                    </div>
+
+                    <div class="preview-control-group">
+                        <button type="button" class="preview-pill-btn active" id="btn-toggle-mock-page">
+                            <span>📄 Atrapa strony: Włączona</span>
+                        </button>
+                        <button type="button" class="preview-pill-btn" id="btn-copy-preview-cfg">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                            <span>Kopiuj konfigurację</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Window Mockup Frame -->
+            <div class="preview-window-frame">
+                <!-- Browser Window Chrome -->
+                <div class="window-chrome">
+                    <div class="win-dots">
+                        <span class="win-dot red"></span>
+                        <span class="win-dot yellow"></span>
+                        <span class="win-dot green"></span>
+                    </div>
+                    <div class="win-address-bar">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        <span id="win-url-text">https://sivisdrive.wowkdigital.com</span>
+                    </div>
+                    <div class="win-meta">
+                        <span class="viewport-badge" id="win-viewport-badge">100% (Desktop)</span>
+                        <span class="live-contrast-badge" id="live-contrast-badge">
+                            <span>🟢 Auto: Ciemny motyw (Jasność ITU: 9)</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Stage where footer will mount inside resizable wrapper -->
+                <div class="preview-stage" id="live-footer-stage">
+                    <div class="preview-viewport-wrapper" id="preview-viewport-wrapper">
+                        <!-- Simulated Page Content (Toggleable) -->
+                        <div class="preview-mock-page" id="preview-mock-page">
+                            <div class="mock-nav">
+                                <div class="mock-nav-brand">
+                                    <span class="mock-logo-dot"></span>
+                                    <span class="mock-brand-title" id="mock-page-title">Sivis Drive</span>
+                                </div>
+                                <div class="mock-nav-links">
+                                    <span class="mock-nav-link active">Pulpit</span>
+                                    <span class="mock-nav-link">Pliki</span>
+                                    <span class="mock-nav-link">Udostępnione</span>
+                                    <span class="mock-nav-link">Raporty</span>
+                                </div>
+                                <div class="mock-user-pill">
+                                    <span class="mock-avatar">WD</span>
+                                </div>
+                            </div>
+                            <div class="mock-hero-banner">
+                                <div class="mock-badge">Oficjalny Ekosystem Wowk Digital</div>
+                                <h3 class="mock-heading" id="mock-hero-title">Centrum Aplikacji Sivis Drive</h3>
+                                <p class="mock-subheading">Poniżej znajduje się stopka biblioteki Wowk Digital Footer, płynnie wkomponowana na dole kontenera z automatyczną detekcją kontrastu ITU-R BT.709.</p>
+                            </div>
+                            <div class="mock-cards-row">
+                                <div class="mock-card">
+                                    <span class="mock-card-icon">⚡</span>
+                                    <span class="mock-card-val">99.9%</span>
+                                    <span class="mock-card-lbl">Dostępność</span>
+                                </div>
+                                <div class="mock-card">
+                                    <span class="mock-card-icon">🔒</span>
+                                    <span class="mock-card-val">End-to-End</span>
+                                    <span class="mock-card-lbl">Szyfrowanie</span>
+                                </div>
+                                <div class="mock-card">
+                                    <span class="mock-card-icon">🌓</span>
+                                    <span class="mock-card-val" id="mock-card-contrast-val">BT.709 OK</span>
+                                    <span class="mock-card-lbl">Inteligentny kontrast</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mount point for wowk footer -->
+                        <div id="footer-mount-container"></div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -1331,7 +1822,20 @@
         const themeIcon = document.getElementById('theme-icon');
         const themeText = document.getElementById('theme-text');
         const liveFooterStage = document.getElementById('live-footer-stage');
-        const themeStatusTag = document.getElementById('theme-status-tag');
+        const liveContrastBadge = document.getElementById('live-contrast-badge');
+        const winUrlText = document.getElementById('win-url-text');
+        const winViewportBadge = document.getElementById('win-viewport-badge');
+        const previewViewportWrapper = document.getElementById('preview-viewport-wrapper');
+        const previewMockPage = document.getElementById('preview-mock-page');
+        const mockPageTitle = document.getElementById('mock-page-title');
+        const mockHeroTitle = document.getElementById('mock-hero-title');
+        const mockCardContrastVal = document.getElementById('mock-card-contrast-val');
+        const previewCustomBg = document.getElementById('preview-custom-bg');
+        const previewCustomHex = document.getElementById('preview-custom-hex');
+        const themeModePills = document.querySelectorAll('#theme-mode-pills .preview-pill-btn');
+        const viewportPills = document.querySelectorAll('#viewport-pills .preview-pill-btn');
+        const btnToggleMockPage = document.getElementById('btn-toggle-mock-page');
+        const btnCopyPreviewCfg = document.getElementById('btn-copy-preview-cfg');
         
         const frameworkRadioLabels = document.querySelectorAll('.framework-radio-label');
         const tabBtns = document.querySelectorAll('.tab-btn');
@@ -1647,10 +2151,25 @@ onMounted(() => {
             // Update active tab code
             tabCodeDisplay.innerHTML = generateTabCode(currentActiveTab);
 
+            const currentSite = siteNameInput.value.trim() || 'Sivis Drive';
+            if (mockPageTitle) mockPageTitle.textContent = currentSite;
+            if (mockHeroTitle) mockHeroTitle.textContent = 'Centrum Aplikacji ' + currentSite;
+            if (winUrlText) {
+                const slug = currentSite.toLowerCase().replace(/[^a-z0-9]/g, '') || 'app';
+                winUrlText.textContent = `https://${slug}.wowkdigital.com`;
+            }
+
+            // Sync Theme Mode Pills
+            if (themeModePills) {
+                themeModePills.forEach(pill => {
+                    pill.classList.toggle('active', pill.getAttribute('data-theme-val') === themeInput.value);
+                });
+            }
+
             // Re-render the live preview footer
             if (window.WowkDigitalFooter) {
-                WowkDigitalFooter.init({
-                    siteName: siteNameInput.value || 'Sivis Drive',
+                const result = WowkDigitalFooter.init({
+                    siteName: currentSite,
                     container: '#footer-mount-container',
                     brandName: brandNameInput.value || 'Wowk Digital',
                     brandUrl: brandUrlInput.value || 'https://github.com/WowkDigital',
@@ -1659,8 +2178,34 @@ onMounted(() => {
                     theme: themeInput.value
                 });
 
-                // Update status tag
-                themeStatusTag.textContent = `Motyw: ${themeInput.value.toUpperCase()}`;
+                if (result && result.bgInfo && liveContrastBadge) {
+                    const isLight = result.activeTheme === 'light';
+                    
+                    // Adapt mock page styling to contrast
+                    if (previewMockPage) {
+                        previewMockPage.classList.toggle('mock-light', isLight);
+                    }
+                    if (mockCardContrastVal) {
+                        mockCardContrastVal.textContent = isLight ? 'Jasny motyw' : 'Ciemny motyw';
+                    }
+
+                    if (themeInput.value === 'auto') {
+                        liveContrastBadge.innerHTML = isLight 
+                            ? `<span>☀️ Auto: Jasny motyw (Luminancja ITU: ${result.bgInfo.luminance} / 255)</span>`
+                            : `<span>🌙 Auto: Ciemny motyw (Luminancja ITU: ${result.bgInfo.luminance} / 255)</span>`;
+                        liveContrastBadge.style.background = isLight ? 'rgba(245, 158, 11, 0.15)' : 'rgba(99, 102, 241, 0.15)';
+                        liveContrastBadge.style.color = isLight ? '#d97706' : '#818cf8';
+                        liveContrastBadge.style.borderColor = isLight ? 'rgba(245, 158, 11, 0.35)' : 'rgba(99, 102, 241, 0.35)';
+                    } else {
+                        const isForcedLight = themeInput.value === 'light';
+                        liveContrastBadge.innerHTML = isForcedLight
+                            ? `<span>⚡ Wymuszony jasny motyw</span>`
+                            : `<span>⚡ Wymuszony ciemny motyw</span>`;
+                        liveContrastBadge.style.background = 'rgba(168, 85, 247, 0.15)';
+                        liveContrastBadge.style.color = '#c084fc';
+                        liveContrastBadge.style.borderColor = 'rgba(168, 85, 247, 0.35)';
+                    }
+                }
             }
         }
 
@@ -1719,13 +2264,85 @@ onMounted(() => {
                 chip.classList.add('active');
                 const bg = chip.getAttribute('data-bg');
                 liveFooterStage.style.background = bg;
+
+                if (previewCustomBg && bg.startsWith('#')) {
+                    previewCustomBg.value = bg;
+                    if (previewCustomHex) previewCustomHex.textContent = bg;
+                }
                 
-                // Allow CSS transition then re-init for auto contrast recalculation
-                setTimeout(() => {
-                    updateAll();
-                }, 100);
+                updateAll();
             });
         });
+
+        // Custom Color Picker input
+        if (previewCustomBg) {
+            previewCustomBg.addEventListener('input', (e) => {
+                const val = e.target.value;
+                if (previewCustomHex) previewCustomHex.textContent = val;
+                bgChips.forEach(c => c.classList.remove('active'));
+                liveFooterStage.style.background = val;
+                updateAll();
+            });
+        }
+
+        // Fast Theme Mode Override Pills in Preview
+        if (themeModePills) {
+            themeModePills.forEach(pill => {
+                pill.addEventListener('click', () => {
+                    const themeVal = pill.getAttribute('data-theme-val');
+                    themeInput.value = themeVal;
+                    updateAll();
+                });
+            });
+        }
+
+        // Responsive Viewport Switcher
+        if (viewportPills && previewViewportWrapper) {
+            viewportPills.forEach(pill => {
+                pill.addEventListener('click', () => {
+                    viewportPills.forEach(p => p.classList.remove('active'));
+                    pill.classList.add('active');
+                    const width = pill.getAttribute('data-width');
+                    previewViewportWrapper.style.maxWidth = width;
+                    if (winViewportBadge) {
+                        winViewportBadge.textContent = pill.textContent.trim();
+                    }
+                });
+            });
+        }
+
+        // Toggle Mock Page content in Preview
+        let isMockPageVisible = true;
+        if (btnToggleMockPage && previewMockPage) {
+            btnToggleMockPage.addEventListener('click', () => {
+                isMockPageVisible = !isMockPageVisible;
+                previewMockPage.classList.toggle('hidden', !isMockPageVisible);
+                btnToggleMockPage.classList.toggle('active', isMockPageVisible);
+                btnToggleMockPage.querySelector('span').textContent = isMockPageVisible 
+                    ? '📄 Atrapa strony: Włączona' 
+                    : '📄 Atrapa strony: Wyłączona';
+            });
+        }
+
+        // Copy preview config
+        if (btnCopyPreviewCfg) {
+            btnCopyPreviewCfg.addEventListener('click', () => {
+                const cfg = `WowkDigitalFooter.init({
+  siteName: '${siteNameInput.value.trim() || 'Sivis Drive'}',
+  container: '${containerInput.value.trim() || 'body'}',
+  brandName: '${brandNameInput.value.trim() || 'Wowk Digital'}',
+  brandUrl: '${brandUrlInput.value.trim() || 'https://github.com/WowkDigital'}',
+  showHubLink: ${hubLinkInput.checked},
+  hubUrl: '${hubUrlInput.value.trim() || 'https://wowkdigital.github.io/WD_HUB/'}',
+  theme: '${themeInput.value}'
+});`;
+                navigator.clipboard.writeText(cfg).then(() => {
+                    showToast('✅ Skopiowano kod konfiguracji!');
+                }).catch(err => {
+                    console.error('Błąd kopiowania:', err);
+                });
+            });
+        }
 
         // Copy AI Prompt
         btnCopyAiPrompt.addEventListener('click', () => {
